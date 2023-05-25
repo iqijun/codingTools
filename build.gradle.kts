@@ -17,10 +17,20 @@ group = properties("pluginGroup").get()
 version = properties("pluginVersion").get()
 
 // Configure project's dependencies
+//repositories {
+//    maven  {
+//        url "http://repo1.maven.org/maven2"
+//    }
+//}
 repositories {
+    maven{
+        setAllowInsecureProtocol(true)
+        setUrl("http://maven.aliyun.com/nexus/content/groups/public/")
+    }
     mavenCentral()
-}
+    google()
 
+}
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
 //    implementation(libs.annotations)
@@ -38,6 +48,7 @@ intellij {
     type = properties("platformType")
 
     // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
+    // 依赖的其他idea插件
     plugins = properties("platformPlugins").map { it.split(',').map(String::trim).filter(String::isNotEmpty) }
 }
 

@@ -2,6 +2,7 @@ package com.github.iqijun.codingtools.compents
 
 import com.github.iqijun.codingtools.constants.Constants
 import com.github.iqijun.codingtools.services.FormatJsonService
+import com.intellij.ui.JBColor
 import java.awt.FlowLayout
 import javax.swing.JButton
 import javax.swing.JPanel
@@ -23,6 +24,7 @@ class JsonFormatPanel(service: FormatJsonService)  : JPanel() {
 
     var formatBtton : JButton = JButton("格式化")
     var compressBtn : JButton = JButton("压缩")
+    var copyBtn : JButton = JButton("复制")
 
 
     var jSplitPane : JSplitPane = JSplitPane(HORIZONTAL_SPLIT,leftPanel,rightPanel);
@@ -37,9 +39,17 @@ class JsonFormatPanel(service: FormatJsonService)  : JPanel() {
         leftJTextArea.isEditable = true
         rightJTextArea.isEditable = true
 
-        leftJTextArea.preferredSize = java.awt.Dimension(Constants.CONTAINER_WITH/3, Constants.CONTAINER_HEIGHT/2)
-        rightJTextArea.preferredSize = java.awt.Dimension(Constants.CONTAINER_WITH/3, Constants.CONTAINER_HEIGHT/2)
+        leftJTextArea.selectedTextColor = JBColor.DARK_GRAY
+        rightJTextArea.selectedTextColor = JBColor.DARK_GRAY
 
+        leftJTextArea.lineWrap = true
+        rightJTextArea.lineWrap = true
+
+
+        leftJTextArea.preferredSize = java.awt.Dimension(Constants.CONTAINER_WITH/2-20, Constants.CONTAINER_HEIGHT)
+        rightJTextArea.preferredSize = java.awt.Dimension(Constants.CONTAINER_WITH/2-20, Constants.CONTAINER_HEIGHT)
+
+        rightJTextArea.location = java.awt.Point(Constants.CONTAINER_WITH/2+10,0)
         leftPanel.add(leftJTextArea)
         rightPanel.add(rightJTextArea)
 
@@ -52,8 +62,12 @@ class JsonFormatPanel(service: FormatJsonService)  : JPanel() {
         compressBtn.addActionListener {
             rightJTextArea.text =  service.compressJson( rightJTextArea.text)
         }
+        copyBtn.addActionListener {
+            service.copyResult(rightJTextArea.text)
+        }
         add(formatBtton,"North")
         add(compressBtn,"North")
+        add(copyBtn,"North")
         add(jSplitPane)
     }
 

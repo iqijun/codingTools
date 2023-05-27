@@ -8,6 +8,7 @@ import com.github.iqijun.codingtools.services.FormatJsonService
 import com.intellij.openapi.components.service
 import com.intellij.openapi.wm.ToolWindow
 import com.intellij.ui.components.JBPanel
+import com.intellij.ui.components.Panel
 import javax.swing.JTabbedPane
 
 class CodingToolWindow(toolWindow: ToolWindow) {
@@ -24,14 +25,18 @@ class CodingToolWindow(toolWindow: ToolWindow) {
 //        })
 
 
-        val tabbedPane = JTabbedPane(JTabbedPane.LEFT)
+        val tabbedPane = JTabbedPane(JTabbedPane.TOP)
         tabbedPane.preferredSize = java.awt.Dimension(CONTAINER_WITH, CONTAINER_HEIGHT)
 
         val jsonFormatPanel = JsonFormatPanel(formatJsonService)
         val timestampPanel = TimestampPanel()
+        val rexPanel = Panel()
+        val modPanel = Panel()
 
         tabbedPane.addTab("格式化json", jsonFormatPanel)
         tabbedPane.addTab("时间戳", timestampPanel)
+        tabbedPane.addTab("正则表达式", rexPanel)
+        tabbedPane.addTab("取模", modPanel)
         add(tabbedPane,"Center")
 
     }
